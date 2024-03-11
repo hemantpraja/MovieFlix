@@ -4,8 +4,8 @@ import Image from 'next/image';
 import styles from "@/app/styles/navbar.module.css";
 import Nav from './Nav.js';
 
-const Header = (props)=>{
-    return(
+const Header = (props) => {
+    return (
         <header className={styles.main_header}>
             <div lcassname={styles.navbar_brand}>
                 <Link href="/">
@@ -13,7 +13,7 @@ const Header = (props)=>{
                 </Link>
 
             </div>
-            <Nav/>
+            <Nav />
         </header>
     )
 }

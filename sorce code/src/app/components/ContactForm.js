@@ -17,9 +17,37 @@ export default function ContactForm() {
         message: ''
     });
 
-    function handleSubmit(event) {
-        event.preventDefault();
-        console.log(user);
+    const [status, setStatus] = useState(null);
+
+    const handleSubmit = async (event) => {
+        try {
+            const response = await fetch('/api/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: user.username,
+                    email: user.email,
+                    phone: user.phone,
+                    message: user.message
+                })
+            });
+        } catch (e) {
+            console.error(e);
+        }
+
+        if (response.status == 201) {
+            setUser({
+                username: '',
+                email: '',
+                phone: '',
+                message: ''
+            });
+            setStatus('success');
+        } else {
+            setStatus('error');
+        };
     }
 
     function handleChange(event) {
@@ -83,12 +111,15 @@ export default function ContactForm() {
                 </label>
             </div>
             <div>
-                <button
-                    type='submit' className={mulish.className}>Send Message</button>
+                {status === 'success' && <p className={styles.success_msg}>Thank you for your message!</p>}
+                {status === 'error' && <p className={styles.error_msg}>There was an error submitting your message. Please try again.</p>}
+
+                <button type='submit' className={mulish.className}>Send Message</button>
             </div>
         </form>
     );
 }
+
 
 
 
